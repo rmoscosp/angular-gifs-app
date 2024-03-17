@@ -13,7 +13,10 @@ export class GifsService {
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+    this.loadLocalStorage();
+    console.log("git service ready");
+  }
 
   get tagsHistory(){
     return [...this._tagsHistory]
@@ -30,6 +33,8 @@ export class GifsService {
     this._tagsHistory.unshift(tag);
 
     this._tagsHistory = this._tagsHistory.splice(0,10);
+
+    this.saveLocalStorage();
 
   }
 
@@ -87,19 +92,25 @@ export class GifsService {
        *
        * para convertir en clases los resultados de un http api
        * https://app.quicktype.io/
-       *
-       *
        */
 
 
-    // const resp = await  fetch('https://api.giphy.com/v1/gifs/search?api_key=m7LA1jgtYOoHyQwkafY9pLW3vS9vLuau&q=valorant&limit=10');
-    // const data = await resp.json();
-    // console.log(data);
-
-    //this._tagsHistory.unshift(tag)
-
   }
 
+  private saveLocalStorage():void {
+    localStorage.setItem('history', JSON.stringify(this.tagsHistory));
+  }
 
+  private loadLocalStorage():void {
+    if(!localStorage.getItem('history')) return;
+
+    this._tagsHistory = JSON.parse( localStorage.getItem('history')! )
+
+    if(this._tagsHistory.length>0){
+      this.searchTag(this._tagsHistory[0]);
+    }
+    //const temporal = localStorage.getItem('history')
+
+  }
 
 }
