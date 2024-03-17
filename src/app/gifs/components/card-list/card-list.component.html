@@ -5,26 +5,11 @@
   <li>cuarto</li>
 </ul> -->
 <div class="row">
-  <div *ngFor="let gif of gifs"
+
+
+  <gifs-card *ngFor="let gif of gifs"
+  [gif]="gif"
   class="col-md-3 col-sm-6"
-  >
-
-  <img
-  [src]="gif.images.downsized_medium.url"
-  [alt]="gif.title"
-  class="card-img-top"
-  >
-
-    <div class="card mb-2 tex-center bg-dark">
-      <!-- TOD:imagen del gift-->
-      <div class="card-body text-white">
-        <p class="card-text">
-          {{ gif.title }}
-
-        </p>
-      </div>
-
-    </div>
-  </div>
+  ></gifs-card>
 
 </div>
